@@ -3,6 +3,12 @@
   justify-content: flex-end;
 }
 
+.display-center-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .user-avatar {
   background-color: blue;
   border-radius: 50%;
@@ -13,4 +19,34 @@
 
 .cursor {
   cursor: pointer;
+}
+
+.display-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.display-vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+.hovered-row {
+  background-color: lightblue;
+}
+
+.contact-table {
+  border-spacing: 0rem;
+  border-collapse: separate;
+}
+
+.space-between {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.invisible{
+  visibility: hidden;
 }

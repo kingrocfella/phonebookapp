@@ -82,7 +82,13 @@ function App() {
         <Modal
           show={showModal}
           handleClose={() => handleShowModal(false)}
-          title={deleteBtn ? "Delete Contact(s)" : title}
+          title={
+            deleteBtn
+              ? "Delete Contact(s)"
+              : modalType === CONSTANTS.contact
+              ? "Add Contact"
+              : title
+          }
           body={
             modalType === CONSTANTS.contact ||
             modalType === CONSTANTS.editdetails ? (
@@ -112,8 +118,8 @@ function App() {
           }
         />
       )}
-      <div className="container p-5">
-        <div className="display-end mt-4">
+      <div className="container">
+        <div className="display-end mt-5">
           <button
             className={`btn ${deleteBtn ? "btn-danger" : "btn-primary"}`}
             onClick={() => {
