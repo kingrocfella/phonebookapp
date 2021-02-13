@@ -1,3 +1,10 @@
+@import "./variables";
+
+html,
+body {
+  background-color: $secondary-color;
+}
+
 .display-end {
   display: flex;
   justify-content: flex-end;
@@ -9,8 +16,27 @@
   align-items: center;
 }
 
+.primary-button {
+  background-color: $primary-color;
+  color: white;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.block-button{
+  background-color: $primary-color;
+  color: white;
+}
+
+.delete-button {
+  background-color: $danger;
+  color: white;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
 .user-avatar {
-  background-color: blue;
+  background-color: $primary-color;
   border-radius: 50%;
   width: 3rem;
   height: 3rem;
@@ -33,7 +59,7 @@
 }
 
 .hovered-row {
-  background-color: lightblue;
+  background-color: $cardboxshadow;
 }
 
 .contact-table {
@@ -43,10 +69,10 @@
 
 .space-between {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 
-.invisible{
+.invisible {
   visibility: hidden;
 }

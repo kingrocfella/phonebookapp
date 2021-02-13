@@ -1,3 +1,4 @@
+@import "./variables";
 
 .check-container {
   display: block;
@@ -39,7 +40,7 @@ input[type="checkbox"] {
 }
 
 .check-container input:checked ~ .checkmark {
-  background-color: #2B2155;
+  background-color: white;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -59,7 +60,7 @@ input[type="checkbox"] {
   top: 0px;
   width: 7px;
   height: 12px;
-  border: solid white;
+  border: solid $primary-color;
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);

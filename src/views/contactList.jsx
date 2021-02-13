@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import Checkbox from "./checkbox/index";
+import Checkbox from "../components/Checkbox";
+import { BsFillEyeFill } from "react-icons/bs";
+import PropTypes from "prop-types";
 
-export default function ContactList({
-  arr,
-  handleViewDetails,
-  handleCheckboxClick,
-}) {
+function ContactList({ arr, handleViewDetails, handleCheckboxClick }) {
   const [hoverID, setHoverID] = useState("");
 
   return (
     <>
-      <table className="table table-borderless contact-table">
+      <table className="table table-borderless contact-table text-white pt-5">
         <tbody>
           {arr.map(({ firstName, lastName, id, check }) => (
             <tr
@@ -35,12 +33,13 @@ export default function ContactList({
               <td>
                 <div className="display-end">
                   <button
-                    className={`btn btn-primary ${
+                    className={`btn primary-button ${
                       hoverID === id ? "" : "invisible"
                     } `}
                     onClick={() => handleViewDetails(id)}
+                    type="button"
                   >
-                    View Details
+                    <BsFillEyeFill /> &nbsp; View Details
                   </button>
                 </div>
               </td>
@@ -51,3 +50,11 @@ export default function ContactList({
     </>
   );
 }
+
+ContactList.propTypes = {
+  handleViewDetails: PropTypes.func.isRequired,
+  handleCheckboxClick: PropTypes.func.isRequired,
+  arr: PropTypes.array.isRequired,
+};
+
+export default ContactList;

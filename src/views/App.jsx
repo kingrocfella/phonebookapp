@@ -1,11 +1,16 @@
 import { useState } from "react";
-import Modal from "./components/Modal";
-import AddContact from "./components/addContact";
-import ContactList from "./components/contactList";
-import ContactDetails from "./components/contactDetails";
-import { ToastContainer } from "react-toastify";
+import Modal from "../components/Modal";
+import AddContact from "./addContact";
+import ContactList from "./contactList";
+import ContactDetails from "./contactDetails";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
+import "../styles/App.scss";
+import {
+  BsPersonPlus,
+  BsPersonDash,
+  BsExclamationCircle,
+} from "react-icons/bs";
 
 function App() {
   const [contacts, handleContacts] = useState([]);
@@ -14,7 +19,7 @@ function App() {
   const [modalType, handleModalType] = useState("");
   const [selectedID, setSelectedID] = useState("");
   const [deleteBtn, setDeleteBtn] = useState(false);
-  const [detail, setDetail] = useState([]);
+  const [detail, setDetail] = useState({});
 
   const CONSTANTS = {
     contact: "1",
@@ -27,6 +32,9 @@ function App() {
     handleShowModal(false);
     const arr = [...contacts, data];
     handleContacts(arr);
+    toast.success("Contact created!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const handleViewDetails = (id) => {
@@ -47,6 +55,9 @@ function App() {
     const newList = [...contactList, data];
     handleContacts(newList);
     handleShowModal(false);
+    toast.success("Contact successfully edited!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const handleCheckboxClick = (id) => {
@@ -73,6 +84,9 @@ function App() {
     handleContacts(newarr);
     handleShowModal(false);
     setDeleteBtn(false);
+    toast.success("Contact(s) deleted!", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   return (
@@ -111,17 +125,21 @@ function App() {
           }
           footer={
             deleteBtn ? (
-              <button className="btn btn-danger" onClick={handleDeleteContact}>
+              <button
+                className="btn delete-button"
+                onClick={handleDeleteContact}
+              >
                 CONFIRM
               </button>
             ) : null
           }
         />
       )}
-      <div className="container">
-        <div className="display-end mt-5">
+      <div className="container text-white">
+        <div className="space-between mt-5">
+          <h3>Phonebook App</h3>
           <button
-            className={`btn ${deleteBtn ? "btn-danger" : "btn-primary"}`}
+            className={`btn datatest-2 ${deleteBtn ? "delete-button" : "primary-button"}`}
             onClick={() => {
               handleShowModal(true);
               handleModalType(
@@ -129,6 +147,7 @@ function App() {
               );
             }}
           >
+            {deleteBtn ? <BsPersonDash /> : <BsPersonPlus />} &nbsp;&nbsp;
             {deleteBtn ? "Delete Checked Contact(s)" : "Add Contact"}
           </button>
         </div>
@@ -140,7 +159,9 @@ function App() {
               handleCheckboxClick={handleCheckboxClick}
             />
           ) : (
-            <div className="text-center pt-5">You have no contacts!</div>
+            <div className="text-center pt-5 datatest-1">
+              <BsExclamationCircle /> &nbsp; You have no contacts!
+            </div>
           )}
         </div>
       </div>

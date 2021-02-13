@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import PhoneNumberField from "../components/PhonenumberField";
+import PropTypes from "prop-types";
 
-export default function AddContact({
+function AddContact({
   addContacts,
   enableEditing,
   saveEditedContact,
@@ -10,7 +12,6 @@ export default function AddContact({
   const [lastName, handleLastName] = useState("");
   const [phoneNumber, handlePhoneNumber] = useState("");
   const [countryCode, handleCountryCode] = useState("");
-
   const [editedfirstName, handleEditedFirstName] = useState(details.firstName);
   const [editedlastName, handleEditedLastName] = useState(details.lastName);
   const [editedphoneNumber, handleEditedPhoneNumber] = useState(
@@ -22,6 +23,7 @@ export default function AddContact({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!firstName || !lastName || !phoneNumber) return;
     const data = {
       firstName,
       lastName,
@@ -35,6 +37,7 @@ export default function AddContact({
 
   const handleSavedChanges = (e) => {
     e.preventDefault();
+    if (!editedfirstName || !editedlastName || !editedphoneNumber) return;
     const data = {
       firstName: editedfirstName,
       lastName: editedlastName,
@@ -51,11 +54,11 @@ export default function AddContact({
       <form onSubmit={enableEditing ? handleSavedChanges : handleSubmit}>
         <div className="form-row">
           <div className="form-group col-md-6">
-            <label htmlFor="inputEmail4">First Name</label>
+            <label htmlFor="firstname">First Name</label>
             <input
               value={enableEditing ? editedfirstName : firstName}
               type="text"
-              className="form-control"
+              className="form-control datatest-5"
               placeholder="First Name"
               onChange={(e) => {
                 if (enableEditing) handleEditedFirstName(e.target.value);
@@ -65,11 +68,11 @@ export default function AddContact({
             />
           </div>
           <div className="form-group col-md-6">
-            <label htmlFor="inputPassword4">Last Name</label>
+            <label htmlFor="lastname">Last Name</label>
             <input
               value={enableEditing ? editedlastName : lastName}
               type="text"
-              className="form-control"
+              className="form-control datatest-6"
               placeholder="Last Name"
               onChange={(e) => {
                 if (enableEditing) handleEditedLastName(e.target.value);
@@ -79,23 +82,43 @@ export default function AddContact({
             />
           </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="inputAddress">Phone Number</label>
-          <input
+        <div className="form-group datatest-4">
+          <label htmlFor="phonenumber">Phone Number</label>
+          <PhoneNumberField
+            countryCode={enableEditing ? editedcountryCode.countryCode : null}
             value={enableEditing ? editedphoneNumber : phoneNumber}
-            type="tel"
-            className="form-control"
-            aria-describedby="phone number"
-            onChange={(e) => {
-              if (enableEditing) handleEditedPhoneNumber(e.target.value);
-              else handlePhoneNumber(e.target.value);
+            handleChange={(num, code) => {
+              if (enableEditing) {
+                handleEditedPhoneNumber(num);
+                handleEditedCountryCode(code);
+              } else {
+                handlePhoneNumber(num);
+                handleCountryCode(code);
+              }
             }}
           />
         </div>
-        <button type="submit" className="mt-5 btn btn-primary btn-block">
+        <button
+          type="submit"
+          className="mt-5 btn block-button btn-block datatest-3"
+          disabled={
+            (enableEditing &&
+              (!editedcountryCode || !editedlastName || !editedphoneNumber)) ||
+            (!enableEditing && (!firstName || !lastName || !phoneNumber))
+          }
+        >
           {enableEditing ? "SAVE CHANGES" : "SUBMIT"}
         </button>
       </form>
     </div>
   );
 }
+
+AddContact.propTypes = {
+  addContacts: PropTypes.func.isRequired,
+  saveEditedContact: PropTypes.func.isRequired,
+  enableEditing: PropTypes.bool.isRequired,
+  details: PropTypes.object.isRequired,
+};
+
+export default AddContact;
